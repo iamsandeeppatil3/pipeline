@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Table Viewer</title>
+</head>
+<body>
+    <h1>MySQL Tables and Contents</h1>
+
+    <form method="post">
+        <label for="table">Select Table:</label>
+        <select name="table" id="table" required>
+            {% for table in tables %}
+                <option value="{{ table[0] }}">{{ table[0] }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="data">Insert Data (comma separated):</label>
+        <input type="text" name="data" id="data" required>
+
+        <button type="submit">Add Data</button>
+    </form>
+
+    <h2>Table Contents</h2>
+    {% for table_name, rows in table_data.items() %}
+        <h3>{{ table_name }}</h3>
+        <table border="1">
+            <tr>
+                {% for col in rows[0] %}
+                    <th>{{ loop.index }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in rows %}
+                <tr>
+                    {% for item in row %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</body>
+</html>
+
